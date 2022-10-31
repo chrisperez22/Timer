@@ -1,26 +1,35 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import ClockDigits from "./Clock.jsx";
 
 //include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
 
-//create your first component
 const Home = () => {
-	return (
-		<div className="text-center">
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
-		</div>
-	);
+  const [seconds, setSeconds] = useState(0);
+
+  const singleDigit = Math.floor((seconds / 1) % 10);
+  const tensDigit = Math.floor((seconds / 10) % 10);
+  const hundredsDigit = Math.floor((seconds / 100) % 10);
+  const thousandsDigit = Math.floor((seconds / 1000) % 10);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setSeconds((seconds) => seconds + 1);
+    }, 1000);
+  });
+
+  return (
+    <div className="d-flex flex-row clock-BG">
+      <div className="clock-indices">
+        <h1>
+          <i class="fas fa-clock"></i>
+        </h1>
+      </div>
+      <ClockDigits value={thousandsDigit}/>
+      <ClockDigits value={hundredsDigit}/>
+      <ClockDigits value={tensDigit}/>
+      <ClockDigits value={singleDigit}/>
+    </div>
+  );
 };
 
 export default Home;
